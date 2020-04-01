@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
+      >
+<h:head>
+  <title>Agenda</title>
+  <meta charset="UTF-8"/>
+</h:head>
+
+<h:body>
+
+<h:form>
+
+<table>
+<THEAD>
+	<TR><th>Nombre</th>
+	<TH>Teléfono</TH>
+	<th/>
+	</TR>
+</THEAD>
+<tr>
+	<td><h:inputText value="#{agenda.contacto.nombre}" required="true"/></td>
+	<td><h:inputText value="#{agenda.contacto.telefono}"/></td>
+	<td><h:commandButton action="#{agenda.aniadirContacto}" value="Añadir"/></td>
+</tr>
+</table>
+
+</h:form>
+
+<h:messages/>
+
+<h:form>
+
+<h:dataTable value="#{agenda.todosContactos}" var="c">
+	<h:column>
+		<f:facet name="header">
+			Nombre
+		</f:facet>
+		<h:outputText value="#{c.nombre}"/>
+	</h:column>
+	
+	<h:column>
+		<f:facet name="header">
+			Teléfono
+		</f:facet>
+		<h:outputText value="#{c.telefono}"/>
+	</h:column>
+	
+	<h:column>
+		<h:commandButton action="#{agenda.eliminar(c)}" value="Eliminar"/>
+	</h:column>
+	
+</h:dataTable>
+
+</h:form>
+
+<h:form>
+	<h:selectOneMenu value="#{agenda.contactoElegido}">
+		<f:selectItems value="#{agenda.todosContactos}" 
+		var="c" itemLabel="#{c.nombre} (#{c.telefono})" itemValue="#{c.nombre}"/>
+	</h:selectOneMenu>
+	<h:outputText value="#{agenda.contactoElegido}"/>
+	<h:commandButton value="Enviar"/>
+</h:form>
+
+</h:body>
+
+</html>
