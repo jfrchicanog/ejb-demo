@@ -1,15 +1,20 @@
-package es.uma.informatica.sii.jsf.demo;
+package es.uma.informatica.sii.ejb.demo.web;
 
 import java.util.List;
 
 import javax.enterprise.context.RequestScoped;
+import javax.inject.Inject;
 import javax.inject.Named;
+
+import es.uma.informatica.sii.ejb.demo.ejb.BaseDeDatosLocal;
+import es.uma.informatica.sii.ejb.demo.entidades.Contacto;
 
 @Named
 @RequestScoped
 public class Agenda{
 
-	private static BBDD bbdd = new BBDD();
+	@Inject
+	private BaseDeDatosLocal bbdd;
 	
 	private Contacto contacto;
 	private String contactoElegido;
@@ -23,16 +28,16 @@ public class Agenda{
 	}
 	
 	public void aniadirContacto() {
-		bbdd.getDatos().add(contacto);
+		bbdd.aniadirContacto(contacto);
 		contacto = new Contacto(); 
 	}
 	
 	public List<Contacto> getTodosContactos() {
-		return bbdd.getDatos();
+		return bbdd.todoContactos();
 	}
 	
 	public void eliminar(Contacto c) {
-		bbdd.getDatos().remove(c);
+		bbdd.eliminarContacto(c);
 	}
 
 	public String getContactoElegido() {

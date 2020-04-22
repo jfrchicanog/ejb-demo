@@ -1,4 +1,4 @@
-package es.uma.informatica.sii.jsf.demo;
+package es.uma.informatica.sii.ejb.demo.web;
 
 import java.util.Collections;
 import java.util.List;
