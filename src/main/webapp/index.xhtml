@@ -1,36 +1,70 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" 
-          "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<!DOCTYPE html>
 <html xmlns="http://www.w3.org/1999/xhtml"
       xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
-      xmlns:h="http://java.sun.com/jsf/html"
-      xmlns:f="http://java.sun.com/jsf/core"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core"
       >
-      
 <h:head>
-  <title>Divisores (en JSF)</title>
+  <title>Agenda</title>
+  <meta charset="UTF-8"/>
 </h:head>
 
 <h:body>
-	<h:form>
-		<table>
-			<tr>
-				<td>Número:</td>
-				<td><h:inputText value="#{calculos.numero}"/></td>
-			</tr>
-			<tr>
-				<td><h:commandButton value="Enviar"/></td>
-				<td></td>
-			</tr>
-		</table>
-	</h:form>
+
+<h:form>
+
+<table>
+<THEAD>
+	<TR><th>Nombre</th>
+	<TH>Teléfono</TH>
+	<th/>
+	</TR>
+</THEAD>
+<tr>
+	<td><h:inputText value="#{agenda.contacto.nombre}" required="true"/></td>
+	<td><h:inputText value="#{agenda.contacto.telefono}"/></td>
+	<td><h:commandButton action="#{agenda.aniadirContacto}" value="Añadir"/></td>
+</tr>
+</table>
+
+</h:form>
+
+<h:messages/>
+
+<h:form>
+
+<h:dataTable value="#{agenda.todosContactos}" var="c">
+	<h:column>
+		<f:facet name="header">
+			Nombre
+		</f:facet>
+		<h:outputText value="#{c.nombre}"/>
+	</h:column>
 	
+	<h:column>
+		<f:facet name="header">
+			Teléfono
+		</f:facet>
+		<h:outputText value="#{c.telefono}"/>
+	</h:column>
 	
-	<h:dataTable value="#{calculos.divisores}" var="d">
-		<h:column>
-			<f:facet name="header">Divisores</f:facet>
-			<h:outputText value="#{d}"/>
-		</h:column>
-	</h:dataTable>
+	<h:column>
+		<h:commandButton action="#{agenda.eliminar(c)}" value="Eliminar"/>
+	</h:column>
+	
+</h:dataTable>
+
+</h:form>
+
+<h:form>
+	<h:selectOneMenu value="#{agenda.contactoElegido}">
+		<f:selectItems value="#{agenda.todosContactos}" 
+		var="c" itemLabel="#{c.nombre} (#{c.telefono})" itemValue="#{c.nombre}"/>
+	</h:selectOneMenu>
+	<h:outputText value="#{agenda.contactoElegido}"/>
+	<h:commandButton value="Enviar"/>
+</h:form>
+
 </h:body>
 
 </html>
